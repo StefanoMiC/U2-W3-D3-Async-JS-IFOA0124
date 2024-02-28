@@ -4,16 +4,22 @@ fetch("https://randomuser.me/api/?gender=female&results=5")
   // 2) si attende il tempo necessario alla risposta del server (è sempre variabile!)
   // il metodo .then() si attiverà se e solo se il reperimento dati va a buon fine, e al momento giusto!
   .then(response => {
+    // response è il valore di ritorno della fetch una volta conclusa,
+    // rappresenta un oggetto con delle informazioni iniziali da cui possiamo ricavare il dato ricevuto dal server
     console.log(response);
     if (response.ok) {
       // se abbiamo una risposta positiva e lo status è da 100 ~ 399
       // il metodo .json() ci traduce il body da readableStream a oggetto JS nativo tramite una conversione da JSON
       return response.json();
     } else {
+      // il throw ci serve per saltare l'esecuzione del prossimo .then() in caso di dato mancante, e arrivare direttamente al .catch() per gestire l'errore
       throw new Error("ERRORE NEL REPERIMENTO DATI");
+      // dopo un throw l'esecuzione si ferma
+      // non ci può essere un codice eseguito successivamente
     }
   })
   .then(userData => {
+    // userData rappresenta il valore di ritorno della precedente funzione, ovvero il risultato di response.json() dopo il suo completamento
     // QUI DENTRO POSSIAMO ESSERE ASSOLUTAMENTE TRANQUILLI NELL'UTILIZZARE IL DATO ARRIVATO DAL SERVER
     console.log("USERDATA", userData);
 
